@@ -64,4 +64,44 @@ public class BookDao {
         }
         return book;
     }
+    public void save(Book book) {
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO Book (`name`, `author`, `dateOfPresent`) VALUES (?,?,?)");
+            preparedStatement.setString(1, book.getName());
+            preparedStatement.setString(2, book.getAuthor());
+            preparedStatement.setInt(3, book.getDateOfPresent());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void update(int id, Book updateBook) {
+        try {
+            PreparedStatement preparedStatement =
+                    connection.prepareStatement("UPDATE Book SET name=?, author=?, dateOfPresent=?  WHERE id=?");
+
+            preparedStatement.setString(1, updateBook.getName());
+            preparedStatement.setString(2, updateBook.getAuthor());
+            preparedStatement.setInt(3, updateBook.getDateOfPresent());
+            preparedStatement.setInt(4, id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    public void deleteId(int id) {
+        PreparedStatement preparedStatement =
+                null;
+        try {
+            preparedStatement = connection.prepareStatement("DELETE FROM Book WHERE id=?");
+
+            preparedStatement.setInt(1, id);
+
+            preparedStatement.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
 }

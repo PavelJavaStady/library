@@ -14,7 +14,6 @@ CREATE TABLE `project_1`.`book` (
 `dateOfPresent` INT NOT NULL,
 `personId` INT,
 PRIMARY KEY (`id`),
-CONSTRAINT `personId`
 FOREIGN KEY (`personId`)
 REFERENCES `project_1`.`person` (`id`)
 ON DELETE SET NULL
