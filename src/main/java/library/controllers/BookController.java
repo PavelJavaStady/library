@@ -1,6 +1,7 @@
 package library.controllers;
 
 import library.dao.BookDao;
+import library.dao.PersonDao;
 import library.model.Book;
 import library.model.Person;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +13,12 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/books")
 public class BookController {
     private BookDao bookDao;
+    private PersonDao personDao;
 
     @Autowired
-    public BookController(BookDao bookDao) {
+    public BookController(BookDao bookDao, PersonDao personDao) {
         this.bookDao = bookDao;
+        this.personDao = personDao;
     }
 
     @GetMapping
@@ -25,8 +28,9 @@ public class BookController {
     }
 
     @GetMapping("/{id}")
-    public String show(@PathVariable("id") int id, Model model) {
+    public String show(@PathVariable("id") int id, Model model, @ModelAttribute("person") Person person) {
         model.addAttribute("book", bookDao.show(id));
+        model.addAttribute("people", personDao.index());
         return "books/show";
     }
 
@@ -59,5 +63,11 @@ public class BookController {
     public String delete(@PathVariable("id") int id) {
         bookDao.deleteId(id);
         return "redirect:/books";
+    }
+
+    @PatchMapping("/{id}/assign")
+    public String assign(@PathVariable("id") int id, @ModelAttribute("person") Person selectedPerson) {
+        bookDao.assign(id, selectedPerson);
+        return "redirect:/books/" + id;
     }
 }

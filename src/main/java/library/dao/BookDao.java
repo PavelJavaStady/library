@@ -28,6 +28,7 @@ public class BookDao {
             e.printStackTrace();
         }
     }
+
     public List<Book> index() {
         List<Book> books = new ArrayList<>();
         try {
@@ -47,6 +48,7 @@ public class BookDao {
         }
         return books;
     }
+
     public Book show(int id) {
         Book book = null;
         try {
@@ -64,6 +66,7 @@ public class BookDao {
         }
         return book;
     }
+
     public void save(Book book) {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO Book (`name`, `author`, `dateOfPresent`) VALUES (?,?,?)");
@@ -99,6 +102,19 @@ public class BookDao {
 
             preparedStatement.setInt(1, id);
 
+            preparedStatement.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    public void assign(int id,Person selectedPerson) {
+        try {
+            PreparedStatement preparedStatement =
+                    connection.prepareStatement("UPDATE Book SET personId=? WHERE id=?");
+
+            preparedStatement.setInt(1, selectedPerson.getId());
+            preparedStatement.setInt(2,id);
             preparedStatement.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
