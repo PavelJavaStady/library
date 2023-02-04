@@ -20,6 +20,10 @@
 </form>
 </div>
 <br/>
+<br/>
+<form th:method="PATCH" th:action="@{/books/{id}/release(id=${book.getId()})}">
+    <input type="submit" value="Release"/>
+</form>
 <a th:href="@{/books/{id}/edit(id=${book.getId()})}">Edit</a>
 
 <form th:method="DELETE" th:action="@{/books/{id}(id=${book.getId()})}">

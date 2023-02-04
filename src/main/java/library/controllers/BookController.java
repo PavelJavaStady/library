@@ -64,6 +64,11 @@ public class BookController {
         bookDao.deleteId(id);
         return "redirect:/books";
     }
+    @PatchMapping("/{id}/release")
+    public String release(@PathVariable("id") int id){
+        bookDao.realease(id);
+        return "redirect:/books/" + id;
+    }
 
     @PatchMapping("/{id}/assign")
     public String assign(@PathVariable("id") int id, @ModelAttribute("person") Person selectedPerson) {

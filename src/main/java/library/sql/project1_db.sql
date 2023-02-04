@@ -16,4 +16,5 @@ CREATE TABLE `project_1`.`book` (
 PRIMARY KEY (`id`),
 FOREIGN KEY (`personId`)
 REFERENCES `project_1`.`person` (`id`)
-ON DELETE SET NULL);
+ON DELETE SET NULL
+     );

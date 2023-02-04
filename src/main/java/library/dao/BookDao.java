@@ -108,13 +108,24 @@ public class BookDao {
         }
     }
 
-    public void assign(int id,Person selectedPerson) {
+    public void realease(int id) {
+        try {
+            PreparedStatement preparedStatement =
+                    connection.prepareStatement("UPDATE Book SET personId=0 WHERE id=?");
+            preparedStatement.setInt(1, id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    public void assign(int id, Person selectedPerson) {
         try {
             PreparedStatement preparedStatement =
                     connection.prepareStatement("UPDATE Book SET personId=? WHERE id=?");
 
             preparedStatement.setInt(1, selectedPerson.getId());
-            preparedStatement.setInt(2,id);
+            preparedStatement.setInt(2, id);
             preparedStatement.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
